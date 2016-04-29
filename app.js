@@ -1,4 +1,6 @@
 var app = require('express')();
+var server = require('http').Server(app);
+var port = process.env.PORT || 9000;
 
 var database = {
 	score: 0
@@ -32,4 +34,6 @@ app.get('/set-score', function(req, res) {
 });
 
 // app.listen(3000);
-app.set('port', process.env.PORT || 8081);
+server.listen(port, function(){
+	console.log('server running at port: '+ port);
+});
