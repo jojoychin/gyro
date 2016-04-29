@@ -32,4 +32,4 @@ app.get('/set-score', function(req, res) {
 });
 
 // app.listen(3000);
-app.listen('port', process.env.PORT || 8081);
+app.set('port', process.env.PORT || 8081);
