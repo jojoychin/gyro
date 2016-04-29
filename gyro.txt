@@ -1,0 +1,53 @@
+<DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    
+    <script>
+    function init() {
+      //Find our div containers in the DOM
+      var dataContainerOrientation = document.getElementById('dataContainerOrientation');
+      var dataContainerMotion = document.getElementById('dataContainerMotion');
+ 
+      //Check for support for DeviceOrientation event
+      // if(window.DeviceOrientationEvent) {
+      //   window.addEventListener('deviceorientation', function(event) {
+      //           var alpha = Math.round(event.alpha * 100) / 100;
+      //           var beta = Math.round(event.beta * 100) / 100;
+      //           var gamma = Math.round(event.gamma * 100) / 100;
+               
+      //           if(alpha!=null || beta!=null || gamma!=null) 
+      //             // dataContainerOrientation.innerHTML = 'alpha: ' + alpha + '<br/>beta: ' + beta + '<br />gamma: ' + gamma;
+      //         }, false);
+      // }
+ 
+      // Check for support for DeviceMotion events
+      if(window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', function(event) {
+                var x = Math.round(event.accelerationIncludingGravity.x * 100) / 100;
+                var y = Math.round(event.accelerationIncludingGravity.y * 100) / 100;
+                var z = Math.round(event.accelerationIncludingGravity.z * 100) / 100;
+                var r = event.rotationRate;
+                // var _x = Math.round(x * 100) / 100;
+                var html = 'Acceleration:<br />';
+                html += 'x: ' + x +'<br />y: ' + y + '<br/>z: ' + z+ '<br />';
+                // html += 'Rotation rate:<br />';
+                // if(r!=null) html += 'alpha: ' + r.alpha +'<br />beta: ' + r.beta + '<br/>gamma: ' + r.gamma + '<br />';
+                dataContainerMotion.innerHTML = html;                  
+              });
+      }
+    }   
+    </script>
+  </head>
+  <body onload="init()">
+    <div id="dataContainerOrientation">
+      No device orientation data
+    </div>
+    <div id="dataContainerMotion">
+      No device motion data
+    </div>
+  </body>
+</html> 
