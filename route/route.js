@@ -68,7 +68,7 @@ app.init = function init() {
                 if(r!=null) html += 'alpha: ' + Math.round(r.alpha) +'<br />beta: ' + Math.round(r.beta) + '<br/>gamma: ' + Math.round(r.gamma) + '<br />';
                 dataContainerMotion.innerHTML = html;  
 
-                var totalScore = Math.abs(rBeta) + Math.abs(rGamma);
+                var totalScore = rGamma;
                 // var totalScore = 10;
                 var endPoint = document.getElementById('endPt');
                 console.log(endPoint);
