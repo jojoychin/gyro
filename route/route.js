@@ -35,37 +35,44 @@ app.init = function init() {
       var dataContainerMotion = document.getElementById('dataContainerMotion');
  
       //Check for support for DeviceOrientation event
-      // if(window.DeviceOrientationEvent) {
-      //   window.addEventListener('deviceorientation', function(event) {
-      //           var alpha = Math.round(event.alpha * 100) / 100;
-      //           var beta = Math.round(event.beta * 100) / 100;
-      //           var gamma = Math.round(event.gamma * 100) / 100;
+      if(window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(event) {
+                var alpha = event.alpha;
+                var beta = event.beta;
+                var gamma = event.gamma;
+                var roundA = Math.round(alpha);
+                var roundB = Math.round(beta);
+                var roundG = Math.round(gamma);
                
-      //           if(alpha!=null || beta!=null || gamma!=null) 
-      //             // dataContainerOrientation.innerHTML = 'alpha: ' + alpha + '<br/>beta: ' + beta + '<br />gamma: ' + gamma;
-      //         }, false);
-      // }
+                // if(alpha!=null || beta!=null || gamma!=null) {
+                  dataContainerOrientation.innerHTML = 'alpha: ' + roundA + '<br/>beta: ' + roundB + '<br />gamma: ' + roundG;
+                // }
+              }, false);
+      }
  
       // Check for support for DeviceMotion events
       if(window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', function(event) {
-                var x = Math.round(event.accelerationIncludingGravity.x * 100) / 100;
-                var y = Math.round(event.accelerationIncludingGravity.y * 100) / 100;
-                var z = Math.round(event.accelerationIncludingGravity.z * 100) / 100;
+                var x = Math.round(event.accelerationIncludingGravity.x);
+                var y = Math.round(event.accelerationIncludingGravity.y);
+                var z = Math.round(event.accelerationIncludingGravity.z);
                 var r = event.rotationRate;
                 // var _x = Math.round(x * 100) / 100;
-                // var html = 'Acceleration:<br />';
-                // html += 'x: ' + x +'<br />y: ' + y + '<br/>z: ' + z+ '<br />';
+                var html = 'Acceleration:<br />';
+                html += 'x: ' + x +'<br />y: ' + y + '<br/>z: ' + z+ '<br />';
 
-                var totalScore = x + y + z;
+                var rBeta = Math.round(r.beta);
+                var rGamma = Math.round(r.gamma);
+
+                html += 'Rotation rate:<br />';
+                if(r!=null) html += 'alpha: ' + Math.round(r.alpha) +'<br />beta: ' + Math.round(r.beta) + '<br/>gamma: ' + Math.round(r.gamma) + '<br />';
+                dataContainerMotion.innerHTML = html;  
+
+                var totalScore = Math.abs(rBeta + rGamma);
                 // var totalScore = 10;
                 var endPoint = document.getElementById('endPt');
                 console.log(endPoint);
-                endPoint.src = "http://localhost:3000/set-score?score="+totalScore;
-
-                // html += 'Rotation rate:<br />';
-                // if(r!=null) html += 'alpha: ' + r.alpha +'<br />beta: ' + r.beta + '<br/>gamma: ' + r.gamma + '<br />';
-                // dataContainerMotion.innerHTML = html;                  
+                endPoint.src = "http://gyro-dev.us-west-2.elasticbeanstalk.com/set-score?score="+totalScore;                
               });
       }
     }
